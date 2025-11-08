@@ -1,19 +1,27 @@
 /* Importing Poppins font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* Base body styles with font and transition for dark/light mode */
+/* ===== Base Styles ===== */
 body {
     font-family: 'Poppins', sans-serif;
     transition: background-color 0.3s, color 0.3s;
     scroll-behavior: smooth;
+    background: #f9fafb;
+    color: #1f2937;
 }
 
-/* Navigation link base styles */
+/* Smooth transitions for theme switching */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+/* ===== Navigation Links ===== */
 .nav-link {
     position: relative;
+    font-weight: 500;
+    color: #1f2937;
 }
 
-/* Underline effect for nav links (hidden by default) */
 .nav-link::after {
     content: '';
     position: absolute;
@@ -21,136 +29,182 @@ body {
     height: 2px;
     bottom: -2px;
     left: 0;
-    background-color: currentColor;
+    background: linear-gradient(90deg, #667eea, #764ba2);
     transition: width 0.3s ease;
 }
 
-/* Show underline on hover for nav links */
-.nav-link:hover::after {
-    width: 100%;
-}
-
-/* Show underline for active nav link */
+.nav-link:hover::after,
 .nav-link.active::after {
     width: 100%;
 }
 
-/* Project card transition effects */
+/* ===== Project Cards ===== */
 .project-card {
-    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
 }
 
-/* Project card hover effect (lift up) */
 .project-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* Skill bar animation for width */
+/* ===== Skill Bars ===== */
 .skill-bar {
+    border-radius: 8px;
+    height: 10px;
+    background: #e5e7eb;
+    overflow: hidden;
+}
+
+.skill-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
     transition: width 1.5s ease-in-out;
 }
 
-/* Custom scrollbar styles for all browsers supporting webkit */
+/* ===== Scrollbar Styles ===== */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
-/* Scrollbar track background */
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
-/* Scrollbar thumb (draggable part) */
 ::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 4px;
 }
 
-/* Scrollbar thumb hover effect */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
-/* Dark mode: scrollbar track color */
 .dark ::-webkit-scrollbar-track {
     background: #1f2937;
 }
 
-/* Dark mode: scrollbar thumb color */
 .dark ::-webkit-scrollbar-thumb {
     background: #4b5563;
 }
 
-/* Dark mode: scrollbar thumb hover color */
 .dark ::-webkit-scrollbar-thumb:hover {
     background: #6b7280;
 }
-/* view page css */
+
+/* ===== Hero Section ===== */
 .project-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
 }
+
+/* ===== Badges & Tech Tags ===== */
 .tech-badge {
-    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    color: #fff;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
 }
+
 .tech-badge:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background: linear-gradient(90deg, #764ba2, #667eea);
 }
-.project-image {
-    transition: transform 0.5s ease;
-}
-.project-image:hover {
-    transform: scale(1.03);
-}
+
+/* ===== Images & Gallery ===== */
+.project-image,
 .gallery-item {
-    transition: all 0.3s ease;
-    cursor: pointer;
+    border-radius: 12px;
+    transition: transform 0.5s ease, box-shadow 0.3s;
 }
+
+.project-image:hover,
 .gallery-item:hover {
     transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
-.back-button:hover i {
-    transform: translateX(-5px);
-}
+
+/* ===== Back Button Animation ===== */
 .back-button i {
     transition: transform 0.3s ease;
 }
+
+.back-button:hover i {
+    transform: translateX(-5px);
+}
+
+/* ===== Fade-in Animation ===== */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 .animate-fade-in {
     animation: fadeIn 0.8s ease forwards;
 }
-/* view page css */
-        body {
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-        }
 
-        /* Dark mode */
-        .dark {
-            background-color: #1a202c;
-            color: #e2e8f0;
-        }
+/* ===== Dark Mode ===== */
+.dark {
+    background-color: #1a202c;
+    color: #e2e8f0;
+}
 
-        /* Eye comfort mode */
-        .eye-comfort {
-            filter: brightness(0.8) contrast(0.9);
-                  background-color: #a79f9f;
-       color: #333;
-        }
-            /* Eye comfort styles */
-    .eye-comfort a {
-      color: #064663; /* softer blue for links */
-    }
+.dark .nav-link {
+    color: #e2e8f0;
+}
 
-        /* Smooth transitions for theme switching */
-        * {
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
+.dark .project-card {
+    background-color: #2d3748;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
 
-        /* Ensure proper dark mode for html element */
-        html.dark {
-            color-scheme: dark;
-        }
+.dark .tech-badge {
+    background: linear-gradient(90deg, #9f7aea, #667eea);
+}
+
+/* ===== Eye Comfort Mode ===== */
+.eye-comfort {
+    background-color: #f0ecd1;
+    color: #333;
+    filter: brightness(0.95) contrast(0.95);
+}
+
+.eye-comfort a {
+    color: #064663;
+}
+
+.eye-comfort .project-card {
+    background-color: #fff9e5;
+}
+
+.eye-comfort .tech-badge {
+    background: linear-gradient(90deg, #f3e7e9, #e3eeff);
+    color: #064663;
+}
+
+/* ===== Ensure Dark Mode Correct on HTML ===== */
+html.dark {
+    color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #1a202c;
+  color: #e2e8f0;
+}
+
+html.dark .nav-link {
+  color: #e2e8f0;
+}
+
+html.eye-comfort body {
+  background-color: #f0ecd1;
+  color: #333;
+}
+
