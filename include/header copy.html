@@ -1,0 +1,108 @@
+    <!-- ==================== Header/Navigation ==================== -->
+<header class="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-all duration-500">
+  <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+
+    <!-- Logo -->
+    <a href="index.html" class="text-2xl font-extrabold tracking-wide text-indigo-600 dark:text-indigo-400 hover:scale-105 transition-transform duration-300 mr-5">
+      <span class="text-yellow-400 dark:text-yellow-300">P</span>ortfolio
+    </a>
+
+    <!-- Navigation Links (Desktop) -->
+    <nav class="hidden md:flex items-center space-x-5">
+      <a href="index.html" class="relative text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 transition-all duration-300 group">
+        Home
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-indigo-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="index.html#about" class="relative text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 transition-all duration-300 group">
+        About
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-indigo-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="index.html#skills" class="relative text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 transition-all duration-300 group">
+        Skills
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-indigo-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="projects.html" class="relative text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 transition-all duration-300 group">
+        Projects
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-indigo-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+      <a href="index.html#contact" class="relative text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 transition-all duration-300 group">
+        Contact
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-indigo-500 group-hover:w-full transition-all duration-300"></span>
+      </a>
+
+      <!-- Download CV -->
+      <a href="assets/cv.pdf" download="CV_Khademul_Islam.pdf"
+         class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105">
+         📄 Download CV
+      </a>
+    </nav>
+
+    <!-- Right Section -->
+    <div class="flex items-center space-x-4">
+
+      <!-- Theme Toggle -->
+      <button id="theme-toggle"
+        class="p-2 rounded-full focus:outline-none bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300">
+        <i id="moon-icon" class="fas fa-moon text-indigo-600 dark:text-yellow-400 hidden dark:block"></i>
+        <i id="sun-icon" class="fas fa-sun text-yellow-600 dark:text-indigo-400 block dark:hidden"></i>
+      </button>
+
+      <!-- Eye Comfort (Optional) -->
+      <button id="eye-comfort-toggle"
+        class="px-3 py-1 border border-indigo-400 text-indigo-600 dark:text-indigo-300 rounded-lg text-sm font-medium hover:bg-indigo-50 dark:hover:bg-indigo-800 hidden transition-all duration-300">
+        👁️ Eye Comfort
+      </button>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-button"
+        class="md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+        <i class="fas fa-bars text-2xl text-gray-800 dark:text-gray-200"></i>
+      </button>
+    </div>
+  </div>
+        
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-gradient-to-b from-indigo-600 to-indigo-800 text-white shadow-2xl rounded-b-2xl">
+    <div class="container mx-auto px-6 py-6 flex flex-col space-y-4">
+
+        <!-- Navigation Links -->
+        <a href="index.html" class="nav-link font-medium text-lg hover:text-yellow-300 transition-all duration-300">🏠 Home</a>
+        <a href="index.html#about" class="nav-link font-medium text-lg hover:text-yellow-300 transition-all duration-300">👤 About</a>
+        <a href="index.html#skills" class="nav-link font-medium text-lg hover:text-yellow-300 transition-all duration-300">💼 Skills</a>
+
+        <!-- Projects Dropdown -->
+        <div class="relative group">
+        <button
+            id="projects-toggle"
+            class="w-full flex justify-between items-center text-lg font-medium hover:text-yellow-300 transition-all duration-300 hover:scale-[1.02]">
+            🚀 Projects
+            <svg class="w-5 h-5 transform transition-transform duration-300" id="projects-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+
+        <!-- Submenu -->
+        <div id="projects-submenu" class="hidden pl-6 mt-3 space-y-2 border-l border-indigo-400">
+            <a href="view.html#project1" class="block hover:text-yellow-300 hover:translate-x-1 transition-all duration-300">E-commerce Platform</a>
+            <a href="view.html#project2" class="block hover:text-yellow-300 hover:translate-x-1 transition-all duration-300">Analytics Dashboard</a>
+            <a href="view.html#project3" class="block hover:text-yellow-300 hover:translate-x-1 transition-all duration-300">Task Management App</a>
+            <a href="view.html#project4" class="block hover:text-yellow-300 hover:translate-x-1 transition-all duration-300">Portfolio Website</a>
+            <a href="view.html#project5" class="block hover:text-yellow-300 hover:translate-x-1 transition-all duration-300">CRM System (On-going)</a>
+            <a href="view.html#project6" class="block hover:text-yellow-300 hover:translate-x-1 transition-all duration-300">Attendance System</a>
+        </div>
+        </div>
+
+        <a href="index.html#contact" class="nav-link font-medium text-lg hover:text-yellow-300 transition-all duration-300">✉️ Contact</a>
+
+        <!-- Download CV Button -->
+        <a href="assets/cv.pdf" download="CV_Khademul_Islam.pdf"
+        class="mt-4 inline-block bg-yellow-400 text-indigo-900 text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-yellow-300 hover:shadow-lg hover:scale-105 transition-all duration-300">
+        📄 Download CV
+        </a>
+    </div>
+    </div>
+
+</header>
+    <!-- ==================== End Header/Navigation ==================== -->
+     
