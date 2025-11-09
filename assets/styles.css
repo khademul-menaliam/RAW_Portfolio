@@ -176,8 +176,19 @@ body {
     filter: brightness(0.95) contrast(0.95);
 }
 
-.eye-comfort a {
-    color: #064663;
+/* .eye-comfort a {
+    color: #1d81af;
+} */
+
+/* Make buttons more visible in eye comfort (light) mode */
+.eye-comfort a.bg-blue-400 {
+  background-color: #3b82f6 !important; /* a bit darker blue */
+  color: #fff !important;
+}
+
+.eye-comfort a.bg-blue-400:hover {
+  background-color: #2563eb !important; /* even darker on hover */
+  color: #fff !important;
 }
 
 .eye-comfort .project-card {
@@ -207,4 +218,26 @@ html.eye-comfort body {
   background-color: #f0ecd1;
   color: #333;
 }
+
+/* assets/styles.css */
+.eye-comfort .mobile-menu {
+  background: linear-gradient(to bottom, #f8eabd, #c5be92);
+  color: #333;
+}
+/* 🔹 Common active link style */
+#mobile-menu .nav-link.active {
+  color: #4f46e5; /* indigo-600 */
+  font-weight: 600;
+}
+
+/* 🌙 Dark mode */
+.dark #mobile-menu .nav-link.active {
+  color: #facc15; /* yellow-400 */
+}
+
+/* 🌤️ Eye comfort mode */
+.eye-comfort #mobile-menu .nav-link.active {
+  color: #1e40af; /* blue-800 */
+}
+
 
