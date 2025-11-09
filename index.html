@@ -6,6 +6,8 @@
   <title>Portfolio of Khademul</title>
 
     <link rel="stylesheet" href="assets/styles.css">
+            <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -38,7 +40,39 @@
   <main class="flex-grow">
     <div id="hero"></div>
     <div id="about_skills"></div>
-    <!-- <div id="projects"></div> -->
+
+  <!-- Project section Content -->
+        <section class="py-10 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+                My <span class="text-indigo-600 dark:text-indigo-400">Projects</span>
+                </h2>
+                <div class="w-20 h-1 bg-blue-500 dark:bg-indigo-400 mx-auto"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects">
+                <!-- Project  -->
+            </div>
+            <div id="view-projects-btn" class="text-center mt-10">
+              <a href="projects.html"
+                  class="group relative inline-flex items-center justify-center px-8 py-3 font-semibold text-white 
+                          rounded-xl overflow-hidden shadow-md transition-all duration-500 
+                          bg-gradient-to-r from-indigo-500 via-purple-500 to-red-400 
+                          hover:shadow-xl hover:scale-110 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400">
+
+                  <!-- Gradient glow animation -->
+                  <span class="absolute inset-0 bg-gradient-to-r from-pink-500 via-indigo-500 to-purple-500 opacity-0 group-hover:opacity-20 blur-xl transition duration-500"></span>
+                  
+                  <!-- Button text -->
+                  <span class="relative z-10 flex items-center space-x-2">
+                  <span>🚀 View All Projects</span>
+                  <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                  </span>
+              </a>
+            </div>
+          </div>
+        </section>
+  <!-- End Project section Content -->
     <div id="contact"></div>
   </main>
 
@@ -47,74 +81,91 @@
 
   <!-- =================== Scripts =================== -->
 <script>
-  // Load header
+  // Load header first and setup theme, mobile menu, active links
   fetch("include/header.html")
     .then(res => res.text())
     .then(data => {
       document.getElementById("header").innerHTML = data;
 
-      // Header elements now exist
       const html = document.documentElement;
       const themeBtn = document.getElementById('theme-toggle');
       const moonIcon = document.getElementById('moon-icon');
       const sunIcon = document.getElementById('sun-icon');
-      const eyeBtn = document.getElementById('eye-comfort-toggle');
       const mobileBtn = document.getElementById('mobile-menu-button');
       const mobileMenu = document.getElementById('mobile-menu');
 
-      // Initialize theme
-      if(localStorage.getItem('theme') === 'dark'){
+      // === Theme Initialization ===
+      const savedTheme = localStorage.getItem('theme');
+      if(savedTheme === 'dark'){
         html.classList.add('dark');
-      }
-      if(!html.classList.contains('dark') && localStorage.getItem('eye-comfort') === 'on'){
+        html.classList.remove('eye-comfort');
+      } else {
+        html.classList.remove('dark');
         html.classList.add('eye-comfort');
       }
 
-      function updateThemeIcons() {
+      function updateThemeIcons(){
         if(html.classList.contains('dark')){
           moonIcon.classList.remove('hidden');
           sunIcon.classList.add('hidden');
-          eyeBtn.classList.add('hidden');
         } else {
           moonIcon.classList.add('hidden');
           sunIcon.classList.remove('hidden');
-          eyeBtn.classList.remove('hidden');
         }
       }
-
       updateThemeIcons();
 
       // Theme toggle
       themeBtn.addEventListener('click', () => {
         html.classList.toggle('dark');
-        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-        updateThemeIcons();
-      });
+        const isDark = html.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
 
-      // Eye comfort toggle
-      eyeBtn.addEventListener('click', () => {
-        if(!html.classList.contains('dark')){
-          html.classList.toggle('eye-comfort');
-          localStorage.setItem('eye-comfort', html.classList.contains('eye-comfort') ? 'on' : 'off');
+        if(isDark){
+          html.classList.remove('eye-comfort');
+        } else {
+          html.classList.add('eye-comfort');
         }
+
+        updateThemeIcons();
       });
 
       // Mobile menu toggle
       mobileBtn.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
       });
-      document.querySelectorAll('#mobile-menu .nav-link').forEach(link =>
-        link.addEventListener('click', () => mobileMenu.classList.add('hidden'))
-      );
+
+      document.querySelectorAll('#mobile-menu .nav-link').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+      });
+
+      // === Active Link Highlight ===
+      const navLinks = document.querySelectorAll('#mobile-menu .nav-link');
+      function setActiveLink() {
+        const current = window.location.hash || window.location.pathname;
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if(link.getAttribute('href') === current){
+            link.classList.add('active');
+          }
+        });
+      }
+      setActiveLink();
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        });
+      });
+      window.addEventListener('hashchange', setActiveLink);
 
     })
     .catch(err => console.error("Header load error:", err));
 
-  // Load other sections
+  // === Load other sections dynamically ===
   const sections = [
     { id: 'hero', file: 'hero' },
     { id: 'about_skills', file: 'about' },
-    // { id: 'projects', file: 'projects' },
     { id: 'contact', file: 'contact' },
     { id: 'footer', file: 'include/footer' }
   ];
@@ -122,32 +173,99 @@
   sections.forEach(section => {
     fetch(`${section.file}.html`)
       .then(res => res.text())
-      .then(data => document.getElementById(section.id).innerHTML = data)
+      .then(data => {
+        document.getElementById(section.id).innerHTML = data;
+
+        // Attach contact form button listener AFTER loading contact section
+        if(section.id === 'contact'){
+          const warningMsg = document.getElementById('warning-msg');
+          const sendBtn = document.getElementById('send-message-btn');
+
+          if(sendBtn && warningMsg){
+            sendBtn.addEventListener('click', () => {
+              warningMsg.classList.remove('hidden');
+              warningMsg.classList.add('opacity-100');
+
+              setTimeout(() => {
+                warningMsg.classList.remove('opacity-100');
+                warningMsg.classList.add('hidden');
+              }, 5000);
+            });
+          }
+        }
+      })
       .catch(err => console.error(`${section.file} load error:`, err));
   });
 
-  // Initialize AOS animations after all content
+  // === Initialize AOS animations ===
   document.addEventListener('DOMContentLoaded', () => {
     if(window.AOS) AOS.init();
   });
 </script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const html = document.documentElement;
-  const savedTheme = localStorage.getItem('theme');
+  const SUPABASE_URL = 'https://alvsikeqnudebronhzym.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsdnNpa2VxbnVkZWJyb25oenltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2OTA3NDUsImV4cCI6MjA3ODI2Njc0NX0.VveUI3DRSSWxrkQMoOBeQ9Vyov3EbPdFMDeBpM-w7yM';
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  if(savedTheme === 'dark'){
-    html.classList.add('dark');
-  } else {
-    html.classList.remove('dark');
+  const container = document.getElementById('projects');
+
+  async function loadProjects() {
+    const { data: projects, error } = await db.from('projects').select('*').order('created_at', { ascending: false });
+    container.innerHTML = '';
+
+    if (error) {
+      container.innerHTML = `<p class="col-span-3 text-red-500 text-center">Failed to load projects.</p>`;
+      return;
+    }
+
+    if (!projects.length) {
+      container.innerHTML = `<p class="col-span-3 text-gray-500 text-center">No projects yet.</p>`;
+      return;
+    }
+
+    projects.forEach(p => {
+      const tags = p.tags ? p.tags.split(',') : [];
+      const tagHTML = tags.map(tag => `<span class="text-xs px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded-full">${tag.trim()}</span>`).join('');
+
+      const card = `
+          <div class="project-card bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300" data-page="1">
+
+              <div class="relative h-48 overflow-hidden">
+                  <img src="${p.image || 'https://placehold.co/600x400?text=No+Image'}"
+                          alt="Project 1"
+                          class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                  <div class="absolute inset-0 bg-indigo-600 dark:bg-indigo-800 bg-opacity-80 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
+                  <a href="view.html?id=${p.id}"
+                      class="text-white text-lg font-medium px-4 py-2 border-2 border-white rounded-lg
+                              hover:bg-white hover:text-indigo-600 dark:hover:text-indigo-300 transition duration-300">
+                      View Project
+                  </a>
+                  </div>
+              </div>
+              <div class="p-6">
+                  <h3 class="text-xl font-semibold mb-2">
+                      <a href="view.html?id=${p.id}" class="hover:underline">
+                          ${p.title}
+                      </a>
+                  </h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                      ${p.description}
+                  </p>
+
+                  <div class="flex flex-wrap gap-2 text-black">${tagHTML}</div>
+              </div>
+          </div>
+      `;
+      container.insertAdjacentHTML('beforeend', card);
+    });
+
   }
 
-  if(savedTheme !== 'dark' && localStorage.getItem('eye-comfort') === 'on'){
-    html.classList.add('eye-comfort');
-  }
+  loadProjects();
 </script>
-
-
 
 </body>
 </html>
