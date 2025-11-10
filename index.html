@@ -19,6 +19,7 @@
         },
     }
     </script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 
   <!-- Font Awesome -->
@@ -59,11 +60,9 @@
                           rounded-xl overflow-hidden shadow-md transition-all duration-500 
                           bg-gradient-to-r from-indigo-500 via-purple-500 to-red-400 
                           hover:shadow-xl hover:scale-110 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400">
-
                   <!-- Gradient glow animation -->
                   <span class="absolute inset-0 bg-gradient-to-r from-pink-500 via-indigo-500 to-purple-500 opacity-0 group-hover:opacity-20 blur-xl transition duration-500"></span>
-                  
-                  <!-- Button text -->
+                                    <!-- Button text -->
                   <span class="relative z-10 flex items-center space-x-2">
                   <span>🚀 View All Projects</span>
                   <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
@@ -176,24 +175,58 @@
       .then(data => {
         document.getElementById(section.id).innerHTML = data;
 
-        // Attach contact form button listener AFTER loading contact section
-        if(section.id === 'contact'){
-          const warningMsg = document.getElementById('warning-msg');
-          const sendBtn = document.getElementById('send-message-btn');
+        // ✅ Contact form logic
+        if (section.id === 'contact') {
+        // Initialize EmailJS
+        emailjs.init("0PfCUdQGydg8YIyMa"); // 🔹 replace with your EmailJS public key
 
-          if(sendBtn && warningMsg){
-            sendBtn.addEventListener('click', () => {
-              warningMsg.classList.remove('hidden');
-              warningMsg.classList.add('opacity-100');
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+          contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-              setTimeout(() => {
-                warningMsg.classList.remove('opacity-100');
-                warningMsg.classList.add('hidden');
-              }, 5000);
-            });
-          }
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // === 1️⃣ Save to Supabase ===
+            const { error } = await db
+              .from('messages')
+              .insert([{ name, email, subject, message }]);
+
+            if (error) {
+              alert('❌ Error saving message: ' + error.message);
+              return;
+            }
+
+            // 2️⃣ Prepare EmailJS parameters
+            const emailParams = {
+              name: name,
+              email: email,
+              subject: subject,
+              message: message,
+              time: new Date().toLocaleString()
+            };
+
+            try {
+              // Send message to YOU
+              await emailjs.send('service_yxru6db', 'template_cogdtl9', emailParams);
+
+              // Send confirmation to USER
+              await emailjs.send('service_yxru6db', 'template_lpxs3fp', emailParams);
+
+              alert('✅ Your message has been sent successfully!');
+              contactForm.reset();
+
+            } catch (error) {
+              console.error("EmailJS error:", error);
+              alert('⚠️ Failed to send message. Check console for details.');
+            }
+          });
         }
-      })
+      }
+    })
       .catch(err => console.error(`${section.file} load error:`, err));
   });
 
@@ -213,7 +246,7 @@
   const container = document.getElementById('projects');
 
   async function loadProjects() {
-    const { data: projects, error } = await db.from('projects').select('*').order('created_at', { ascending: false });
+    const { data: projects, error } = await db.from('projects').select('*').order('id', { ascending: false });
     container.innerHTML = '';
 
     if (error) {
@@ -265,6 +298,27 @@
   }
 
   loadProjects();
+
+      document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value
+      const email = document.getElementById('email').value
+      const subject = document.getElementById('subject').value
+      const message = document.getElementById('message').value
+
+      // Save message to Supabase
+      const { data, error } = await supabase
+        .from('messages')
+        .insert([{ name, email, subject, message }])
+
+      if (error) {
+        alert('❌ Error saving message: ' + error.message)
+      } else {
+        alert('✅ Message saved successfully!')
+        // Optionally, trigger email here (see below)
+      }
+    })
 </script>
 
 </body>
